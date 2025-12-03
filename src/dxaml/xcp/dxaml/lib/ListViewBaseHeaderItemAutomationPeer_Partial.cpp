@@ -172,14 +172,15 @@ IFACEMETHODIMP ListViewBaseHeaderItemAutomationPeer::GetBoundingRectangleCore(_O
 {
     HRESULT hr = S_OK;
     ctl::ComPtr<IUIElement> spOwner;
-    IFCPTR(returnValue);
+	XRECTF rect;
+	IFCPTR(returnValue);
     IFC(get_Owner(&spOwner));
     IFCPTR(spOwner.Get());
 
     wf::Rect groupBounds;
     IFC(spOwner.Cast<ListViewBaseHeaderItem>()->GetGroupBounds(&groupBounds));
 
-    XRECTF rect = ConvertRectToXRECTF(groupBounds);
+    rect = ConvertRectToXRECTF(groupBounds);
     if (XamlOneCoreTransforms::IsEnabled())
     {
         // In OneCoreTransforms mode, GetGroupBounds returns logical pixels so we must convert to RasterizedClient
